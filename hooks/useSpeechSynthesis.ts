@@ -2,44 +2,24 @@
 
 import { useCallback, useEffect, useState } from "react";
 import type { Language } from "@/components/LanguageContext";
+import { browserSpeechVoiceService, type VoicePlaybackService } from "@/services/voiceService";
 
-const locale: Record<Language, string> = { EN: "en-IN", "हिन्दी": "hi-IN", "ಕನ್ನಡ": "kn-IN" };
-
-export function useSpeechSynthesis(language: Language) {
+export function useSpeechSynthesis(language: Language, service: VoicePlaybackService = browserSpeechVoiceService) {
   const [speaking, setSpeaking] = useState(false);
   const [message, setMessage] = useState("");
 
-  useEffect(() => () => {
-    if ("speechSynthesis" in window) window.speechSynthesis.cancel();
-  }, [language]);
+  useEffect(() => () => service.stop(), [language, service]);
 
   const speak = useCallback((text: string) => {
-    if (typeof window === "undefined" || !("speechSynthesis" in window)) {
-      setMessage("Speech is not available here.");
-      return;
-    }
-    const synthesizer = window.speechSynthesis;
-    const voices = synthesizer.getVoices();
-    const languagePrefix = locale[language].slice(0, 2).toLowerCase();
-    const voice = voices.find((item) => item.lang.toLowerCase().startsWith(languagePrefix));
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = locale[language];
-    if (voice) utterance.voice = voice;
-    setMessage(voice ? "" : language === "EN" ? "No English voice is available on this device. We'll try its default voice." : language === "हिन्दी" ? "No Hindi voice is available on this device. We'll try its default voice." : "No Kannada voice is available on this device. We'll try its default voice.");
-    utterance.onstart = () => setSpeaking(true);
-    utterance.onend = () => setSpeaking(false);
-    utterance.onerror = (event) => {
-      setSpeaking(false);
-      if (event.error !== "canceled" && event.error !== "interrupted") setMessage("Speech is not available here.");
-    };
-    synthesizer.cancel();
-    synthesizer.speak(utterance);
-  }, [language]);
+    setMessage("");
+    setSpeaking(true);
+    void service.speak(text, language).catch((error: unknown) => setMessage(error instanceof Error ? error.message : "Speech is not available here.")).finally(() => setSpeaking(false));
+  }, [language, service]);
 
   const stop = useCallback(() => {
-    if (typeof window !== "undefined" && "speechSynthesis" in window) window.speechSynthesis.cancel();
+    service.stop();
     setSpeaking(false);
-  }, []);
+  }, [service]);
 
   return { speak, stop, speaking, message };
 }

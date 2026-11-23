@@ -23,7 +23,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
   const [menu, setMenu] = useState<"notifications" | "profile" | "language" | null>(null);
   const { language, setLanguage } = useLanguage();
-  const page = nav.find((item) => item.href === pathname)?.label ?? "Overview";
+  const page = nav.find((item) => item.href === pathname)?.label ?? (pathname.startsWith("/assessment/") ? "My Skills" : "Overview");
 
   return <div className="app-shell">
     <aside className={`sidebar ${open ? "sidebar-open" : ""}`}>

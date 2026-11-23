@@ -1,2 +1,3 @@
-import { ModulePage } from "@/components/ModulePage";
-export default function Page() { return <ModulePage module="skills"/>; }
+import { SkillsPage } from "@/components/skills/SkillsPage";
+
+export default function Page() { return <SkillsPage />; }
