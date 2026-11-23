@@ -1,0 +1,163 @@
+.page {
+  width: 100%;
+  max-width: 1260px;
+  margin: 0 auto;
+  display: grid;
+  gap: 22px;
+  color: #18283d;
+}
+
+.welcome {
+  min-height: 154px;
+  padding: 25px 28px;
+  border-radius: 16px;
+  background: #142d4e;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.welcome::after {
+  content: "";
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  border: 1px solid #ffffff1a;
+  border-radius: 50%;
+  right: 120px;
+  top: -165px;
+  box-shadow: 0 0 0 24px #ffffff08, 0 0 0 50px #ffffff08;
+  pointer-events: none;
+}
+
+.welcomeCopy { position: relative; z-index: 1; }
+.eyebrow { color: #b9cdea; font-size: 10px; font-weight: 750; letter-spacing: 1.2px; }
+.welcome h1 { margin: 9px 0 5px; color: #fff; font-size: 29px; font-weight: 700; letter-spacing: -.6px; line-height: 1.2; }
+.welcome p { margin: 0; color: #d6e2f1; font-size: 14px; }
+.demoLabel { display: inline-flex; margin-top: 8px; padding: 3px 7px; border-radius: 5px; background: #ffffff1a; color: #d7e3f2; font-size: 9px; font-weight: 650; letter-spacing: .3px; }
+
+.voiceButton {
+  position: relative;
+  z-index: 1;
+  min-width: 75px;
+  height: 74px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  border: 1px solid #ffffff55;
+  border-radius: 14px;
+  background: #ffffff14;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .15s;
+}
+.voiceButton:hover { background: #ffffff25; }
+
+.columns { display: grid; grid-template-columns: minmax(0, 1.13fr) minmax(330px, .87fr); align-items: start; gap: 20px; }
+.mainColumn, .sideColumn { min-width: 0; display: grid; align-content: start; gap: 19px; }
+.completion { min-height: 111px; padding: 18px 19px; display: flex; align-items: center; gap: 14px; border: 1px solid #dce8f8; border-radius: 13px; background: #f3f7ff; }
+.completionIcon { width: 48px; height: 48px; flex: none; display: grid; place-items: center; border-radius: 13px; background: #eaf1ff; color: #3478f6; }
+.completionBody { min-width: 0; flex: 1; }
+.completionHeading { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.completionHeading h2 { margin: 0; color: #1f344e; font-size: 15px; line-height: 1.3; }
+.completionHeading strong { color: #2466ce; font-size: 15px; }
+.progress { height: 8px; margin: 10px 0 6px; overflow: hidden; border-radius: 8px; background: #e9edf3; }
+.progress span { width: 25%; height: 100%; display: block; border-radius: inherit; background: #3478f6; }
+.completionBody p { margin: 0; color: #7d8b9c; font-size: 11px; }
+.continue { min-height: 43px; padding: 0 13px; display: inline-flex; align-items: center; justify-content: center; gap: 7px; border: 0; border-radius: 9px; background: #3478f6; color: #fff; font-size: 12px; font-weight: 700; white-space: nowrap; transition: background .15s; }
+.continue:hover { background: #215fcf; }
+.actionsSection { display: grid; gap: 13px; }
+.sectionHeading { display: flex; align-items: center; justify-content: space-between; }
+.sectionHeading h2 { margin: 0; color: #1f344e; font-size: 18px; letter-spacing: -.2px; line-height: 1.3; }
+
+.panel { min-width: 0; padding: 18px; border: 1px solid #e7ecf2; border-radius: 13px; background: #fff; }
+.panelHeading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 15px; }
+.panelHeading h2 { margin: 0; color: #20364f; font-size: 16px; letter-spacing: -.2px; line-height: 1.3; }
+.panelHeading p { margin: 4px 0 0; color: #8190a3; font-size: 11px; line-height: 1.4; }
+.panelLink { width: 34px; height: 34px; flex: none; display: grid; place-items: center; border-radius: 9px; background: #f2f6fc; color: #4672a9; }
+.seeAll { display: inline-flex; align-items: center; gap: 4px; color: #2869d8; font-size: 11px; font-weight: 700; white-space: nowrap; }
+.tradeGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+.tradeCard { min-height: 97px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px; border: 1px solid #e9edf3; border-radius: 11px; background: #fff; transition: transform .15s, border .15s, box-shadow .15s; }
+.tradeCard:hover { transform: translateY(-2px); border-color: #b8ccec; box-shadow: 0 4px 14px #142d4e0d; }
+.tradeCard strong { color: #30445c; font-size: 12px; }
+.tradeIcon { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 12px; }
+.electrician { background: #fff5db; color: #a9780d; }
+.plumber { background: #e7f4ff; color: #2772bc; }
+.mason { background: #f8eee4; color: #96643b; }
+.welder { background: #f0eaff; color: #7053b7; }
+.workerList { display: grid; gap: 0; }
+.voiceTip { min-height: 69px; padding: 12px 14px; display: flex; align-items: center; gap: 11px; border-radius: 13px; background: #eaf2ff; color: #29476f; }
+.voiceIcon { width: 41px; height: 41px; flex: none; display: grid; place-items: center; border-radius: 12px; background: #3478f6; color: #fff; }
+.voiceCopy { min-width: 0; flex: 1; display: grid; gap: 3px; }
+.voiceCopy strong { font-size: 12px; }
+.voiceCopy small { color: #637d9f; font-size: 10px; line-height: 1.4; }
+.voiceLink { width: 34px; height: 34px; flex: none; display: grid; place-items: center; border-radius: 9px; color: #2869d8; }
+
+@media (min-width: 1600px) {
+  .actionGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 1050px) {
+  .columns { grid-template-columns: minmax(0, 1fr) minmax(275px, .78fr); gap: 15px; }
+  .mainColumn, .sideColumn { gap: 15px; }
+  .panel { padding: 15px; }
+  .completion { padding: 15px; }
+}
+
+@media (max-width: 850px) {
+  .columns { grid-template-columns: minmax(0, 1fr); }
+  .sideColumn { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+  .workersPanel { grid-column: 1 / -1; grid-row: 1; }
+  .workerList { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 10px; }
+  .tradePanel { grid-column: 1; }
+  .voiceTip { grid-column: 2; align-self: stretch; }
+}
+
+@media (max-width: 600px) {
+  .page { gap: 14px; }
+  .welcome { min-height: 126px; padding: 18px 16px; border-radius: 14px; }
+  .welcome::after { right: 35px; }
+  .eyebrow { font-size: 9px; letter-spacing: .9px; }
+  .welcome h1 { margin: 8px 0 4px; font-size: 23px; }
+  .welcome p { max-width: 230px; font-size: 12px; line-height: 1.45; }
+  .voiceButton { width: 58px; min-width: 58px; height: 61px; border-radius: 12px; }
+  .voiceButton svg { width: 22px; height: 22px; }
+  .columns, .mainColumn, .sideColumn { gap: 14px; }
+  .completion { min-height: 0; padding: 13px; display: grid; grid-template-columns: 42px minmax(0, 1fr); gap: 10px; }
+  .completionIcon { width: 42px; height: 42px; border-radius: 11px; }
+  .completionHeading h2, .completionHeading strong { font-size: 13px; }
+  .completionHeading strong { font-size: 14px; }
+  .progress { height: 7px; margin: 8px 0 5px; }
+  .completionBody p { font-size: 10px; }
+  .continue { width: 100%; min-height: 46px; grid-column: 1 / -1; font-size: 13px; }
+  .actionsSection { gap: 10px; }
+  .sectionHeading h2 { font-size: 16px; }
+  .actionGrid { gap: 9px; }
+  .sideColumn { grid-template-columns: minmax(0, 1fr); }
+  .workersPanel, .tradePanel, .voiceTip { grid-column: auto; grid-row: auto; }
+  .workerList { grid-template-columns: minmax(0, 1fr); }
+  .panel { padding: 14px; border-radius: 12px; }
+  .panelHeading { margin-bottom: 11px; }
+  .panelHeading h2 { font-size: 15px; }
+  .tradeGrid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 7px; }
+  .tradeCard { min-height: 84px; gap: 5px; border-radius: 10px; }
+  .tradeIcon { width: 37px; height: 37px; border-radius: 11px; }
+  .tradeIcon svg { width: 22px; height: 22px; }
+  .tradeCard strong { font-size: 11px; }
+  .voiceTip { min-height: 67px; padding: 11px; }
+  .voiceCopy small { font-size: 10px; }
+}
+
+@media (max-width: 360px) {
+  .actionGrid { grid-template-columns: minmax(0, 1fr); }
+  .tradeGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tradeCard { min-height: 86px; }
+}

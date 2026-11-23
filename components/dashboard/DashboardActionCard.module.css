@@ -1,0 +1,37 @@
+.card {
+  min-width: 0;
+  min-height: 107px;
+  padding: 15px;
+  display: grid;
+  grid-template-columns: 49px minmax(0, 1fr) 17px;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid #e5ebf2;
+  border-radius: 13px;
+  background: #fff;
+  color: #1f344e;
+  transition: transform .16s, border-color .16s, box-shadow .16s;
+}
+.card:hover { transform: translateY(-2px); border-color: #b7cbea; box-shadow: 0 5px 16px #142d4e10; }
+.card:focus-visible { outline: 3px solid #3478f6; outline-offset: 2px; }
+.icon { width: 49px; height: 49px; display: grid; place-items: center; border-radius: 14px; }
+.blue { background: #eaf1ff; color: #2d67bd; }
+.green { background: #e8f7f0; color: #168153; }
+.gold { background: #fff4d9; color: #a7780d; }
+.purple { background: #f0ebff; color: #7552bd; }
+.teal { background: #e5f6f2; color: #168b77; }
+.orange { background: #fff0e8; color: #c26a30; }
+.copy { min-width: 0; display: flex; flex-direction: column; gap: 5px; }
+.copy strong { font-size: 14px; line-height: 1.25; font-weight: 700; }
+.copy small { color: #78889c; font-size: 11px; line-height: 1.35; }
+.arrow { color: #8190a3; justify-self: end; }
+
+@media (max-width: 600px) {
+  .card { min-height: 105px; padding: 12px; position: relative; grid-template-columns: 42px minmax(0, 1fr); align-content: start; align-items: start; gap: 9px; }
+  .icon { width: 42px; height: 42px; border-radius: 12px; }
+  .icon svg { width: 23px; height: 23px; }
+  .copy { padding-top: 2px; gap: 5px; }
+  .copy strong { font-size: 12px; }
+  .copy small { font-size: 11px; line-height: 1.35; }
+  .arrow { position: absolute; right: 12px; bottom: 11px; width: 15px; height: 15px; }
+}

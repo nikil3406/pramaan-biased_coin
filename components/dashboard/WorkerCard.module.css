@@ -1,0 +1,12 @@
+.card { min-width: 0; padding: 13px 0; display: grid; grid-template-columns: 43px minmax(0, 1fr) auto; align-items: start; gap: 10px; border-bottom: 1px solid #edf0f4; position: relative; }
+.card:last-child { padding-bottom: 2px; border-bottom: 0; }
+.avatar { width: 43px; height: 43px; display: grid; place-items: center; border: 2px solid #fff; border-radius: 50%; box-shadow: 0 0 0 1px #e7edf4; color: #36516f; font-size: 12px; font-weight: 750; }
+.info { min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.name { display: flex; align-items: center; gap: 5px; overflow: hidden; color: #293e57; font-size: 12px; font-weight: 700; line-height: 1.35; }
+.name svg { flex: none; color: #16a36a; fill: #e5f7ef; }
+.trade { color: #5b6f88; font-size: 11px; }
+.place { min-width: 0; display: flex; align-items: center; gap: 4px; color: #8391a2; font-size: 11px; line-height: 1.35; }
+.place svg { flex: none; }
+.years { color: #8391a2; font-size: 11px; }
+.link { grid-column: 2; display: inline-flex; align-items: center; justify-self: start; gap: 4px; margin-top: 3px; color: #2869d8; font-size: 10px; font-weight: 700; }
+.sample { position: absolute; top: 13px; right: 0; padding: 3px 6px; border-radius: 5px; background: #f2f5f8; color: #7d8b9a; font-size: 8px; letter-spacing: .2px; }
