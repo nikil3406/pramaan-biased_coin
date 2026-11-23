@@ -1,0 +1,87 @@
+.shell { width: 100%; max-width: 760px; min-height: calc(100vh - 145px); margin: 0 auto; display: flex; flex-direction: column; gap: 14px; color: #18283d; }
+.topLine { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.homeLink { min-height: 42px; padding: 0 8px; display: inline-flex; align-items: center; gap: 7px; color: #5d728b; font-size: 13px; font-weight: 700; white-space: nowrap; }
+.formCard { flex: 1; display: flex; flex-direction: column; border: 1px solid #e5eaf2; border-radius: 17px; background: #fff; box-shadow: 0 8px 26px #18395c0a; overflow: hidden; }
+.progressHeader { padding: 19px 24px 15px; background: #f5f8fd; border-bottom: 1px solid #e9eef5; }
+.progressHeader>div:first-child { display: flex; align-items: center; justify-content: space-between; gap: 10px; color: #315983; font-size: 12px; font-weight: 750; }
+.progressHeader>div:first-child strong { color: #75869b; font-size: 11px; font-weight: 650; }
+.progressTrack { height: 7px; margin: 11px 0 14px; border-radius: 10px; background: #e2e9f2; overflow: hidden; }
+.progressTrack i { height: 100%; display: block; border-radius: inherit; background: #3478f6; transition: width .2s ease; }
+.groupSteps { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 8px; }
+.groupSteps>span { min-width: 0; min-height: 24px; display: flex; align-items: center; gap: 6px; color: #8795a6; font-size: 11px; }
+.groupSteps small { overflow: hidden; color: inherit; font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }
+.currentStep { color: #2468d2!important; font-weight: 750; }
+.pastStep { color: #168153!important; }
+.futureStep { color: #9aa7b5; }
+.currentStep::before,.pastStep::before,.futureStep::before { width: 22px; height: 22px; flex: none; display: grid; place-items: center; border-radius: 50%; background: #e5edfb; content: ""; }
+.currentStep::before { background: #3478f6; }
+.pastStep::before { background: #e6f6ee; }
+.formBody { width: 100%; max-width: 600px; margin: 0 auto; padding: 26px 28px 30px; display: grid; align-content: start; gap: 17px; }
+.questionNumber { display: flex; align-items: center; gap: 8px; color: #8292a5; }
+.questionNumber>span { width: 35px; height: 35px; display: grid; place-items: center; border-radius: 10px; background: #edf3ff; color: #3478f6; }
+.questionNumber>small { color: #73859a; font-size: 11px; font-weight: 750; letter-spacing: .55px; text-transform: uppercase; }
+.micGlyph { font-size: 13px; }
+.validation,.matchMessage { margin: -6px 0 0; padding: 9px 11px; border-radius: 8px; font-size: 12px; line-height: 1.4; }
+.validation { background: #fff2ef; color: #a7362e; }
+.matchMessage { background: #fff7e4; color: #8a6110; }
+.formFooter { margin-top: auto; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; gap: 14px; border-top: 1px solid #edf0f5; background: #fff; }
+.formFooter p { max-width: 260px; margin: 0; color: #7c8da0; font-size: 10px; line-height: 1.4; }
+.formFooter>div { display: flex; gap: 9px; }
+.backButton,.nextButton,.primaryButton { min-height: 47px; padding: 0 14px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 0; border-radius: 10px; font-size: 13px; font-weight: 700; cursor: pointer; }
+.backButton { background: #edf1f6; color: #52677f; }
+.backButton:disabled { opacity: .45; cursor: default; }
+.nextButton,.primaryButton { background: #245fc9; color: #fff; }
+.nextButton:hover,.primaryButton:hover { background: #194fae; }
+.choiceGrid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
+.choiceCard { min-height: 101px; padding: 11px; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; border: 2px solid #e5eaf1; border-radius: 12px; background: #fff; color: #33475f; font-size: 13px; font-weight: 700; cursor: pointer; transition: border-color .15s,background .15s,transform .15s; }
+.choiceCard:hover { border-color: #a8c3ea; transform: translateY(-1px); }
+.choiceCard.selected { border-color: #3478f6; background: #f2f7ff; }
+.tradeIcon { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 12px; background: #fff3d8; color: #a9780d; }
+.choiceCard:nth-child(2) .tradeIcon { background: #e7f4ff; color: #2772bc; }
+.choiceCard:nth-child(3) .tradeIcon { background: #f8eee4; color: #96643b; }
+.choiceCard:nth-child(4) .tradeIcon { background: #f0eaff; color: #7053b7; }
+.checkMark { width: 21px; height: 21px; position: absolute; top: 7px; right: 7px; display: grid; place-items: center; border-radius: 50%; background: #3478f6; color: white; }
+.photoPicker { display: grid; justify-items: center; gap: 10px; padding: 15px; border: 1px dashed #cbd7e5; border-radius: 12px; background: #f9fbfe; }
+.photoPreview,.photoPlaceholder { width: 86px; height: 86px; display: grid; place-items: center; border-radius: 50%; object-fit: cover; background: #eaf1ff; color: #4a77b2; }
+.photoButton { min-height: 45px; padding: 0 14px; display: inline-flex; align-items: center; justify-content: center; border-radius: 9px; background: #3478f6; color: white; font-size: 12px; font-weight: 700; cursor: pointer; }
+.photoButton input { position: absolute; width: 1px; height: 1px; overflow: hidden; opacity: 0; }
+.skipPhoto { min-height: 36px; padding: 0 11px; border: 1px solid #dde5ee; border-radius: 8px; background: white; color: #657990; font-size: 11px; font-weight: 650; cursor: pointer; }
+.photoPicker>small { color: #8291a3; font-size: 11px; text-align: center; }
+.skillPicker>p { margin: 0 0 8px; color: #40546d; font-size: 12px; font-weight: 700; }
+.skillGrid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; }
+.skillCard { min-height: 54px; padding: 8px 10px; display: flex; align-items: center; gap: 9px; border: 1px solid #dce4ee; border-radius: 10px; background: #fff; color: #3a506a; font-size: 12px; font-weight: 650; text-align: left; cursor: pointer; }
+.skillCard.selected { border-color: #3478f6; background: #f2f7ff; color: #225aa7; }
+.skillCheck { width: 20px; height: 20px; flex: none; display: grid; place-items: center; border: 1px solid #c8d4e2; border-radius: 6px; background: #fff; color: #3478f6; }
+.skillCard.selected .skillCheck { border-color: #3478f6; }
+.selectedSkills { margin-top: 10px; display: flex; align-items: flex-start; gap: 7px; color: #218454; font-size: 11px; line-height: 1.5; }
+.selectedSkills svg { flex: none; margin-top: 1px; }
+.doneCard { width: 100%; max-width: 560px; margin: auto; padding: 30px; display: grid; justify-items: center; gap: 12px; border: 1px solid #e4eaf2; border-radius: 17px; background: #fff; box-shadow: 0 8px 26px #18395c0a; text-align: center; }
+.doneIcon { width: 70px; height: 70px; display: grid; place-items: center; border-radius: 50%; background: #e7f7ee; color: #168153; }
+.doneCard h1 { margin: 4px 0 0; color: #1f344e; font-size: 26px; }
+.doneCard>p { margin: 0; color: #73849a; font-size: 13px; }
+.summary { width: 100%; margin: 8px 0; padding: 12px; display: grid; gap: 8px; border-radius: 10px; background: #f5f8fc; color: #40546d; font-size: 12px; }
+.primaryButton { min-height: 49px; text-decoration: none; }
+.reviewButton { min-height: 40px; border: 0; background: transparent; color: #3478f6; font-size: 12px; font-weight: 700; cursor: pointer; }
+.loading { min-height: 200px; display: flex; align-items: center; justify-content: center; gap: 9px; color: #60758d; }
+.loadingDot { width: 10px; height: 10px; border-radius: 50%; background: #3478f6; animation: loadPulse .8s ease-in-out infinite alternate; }
+@keyframes loadPulse { to { opacity: .3; transform: scale(.75); } }
+
+@media(max-width:600px) {
+  .shell { min-height: calc(100vh - 110px); gap: 10px; }
+  .topLine { align-items: flex-start; }
+  .formCard { border-radius: 14px; }
+  .progressHeader { padding: 14px 14px 12px; }
+  .groupSteps { gap: 5px; }
+  .groupSteps>span { justify-content: center; }
+  .groupSteps small { display: none; }
+  .formBody { padding: 19px 15px 22px; gap: 14px; }
+  .questionNumber>span { width: 32px; height: 32px; }
+  .questionNumber>small { font-size: 10px; }
+  .formFooter { padding: 12px 13px; flex-direction: column; align-items: stretch; }
+  .formFooter p { max-width: none; text-align: center; }
+  .formFooter>div { display: grid; grid-template-columns: auto minmax(0,1fr); }
+  .backButton,.nextButton { min-height: 49px; }
+  .choiceCard { min-height: 96px; }
+  .skillGrid { grid-template-columns: minmax(0,1fr); }
+  .doneCard { padding: 23px 16px; }
+}
