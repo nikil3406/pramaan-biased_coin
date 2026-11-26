@@ -1,2 +1,5 @@
-import { ProfileFlow } from "@/components/ProfileFlow";
-export default function Page() { return <ProfileFlow/>; }
+import { ConversationalOnboarding } from "@/components/onboarding/ConversationalOnboarding";
+
+export default function Page() {
+  return <ConversationalOnboarding />;
+}

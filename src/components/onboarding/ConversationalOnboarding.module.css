@@ -1,0 +1,40 @@
+@keyframes pulse { from { transform: scale(.96); opacity: .7; } to { transform: scale(1); opacity: 1; } }
+.shell { min-height: calc(100vh - 145px); max-width: 680px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; color: #1d3048; }
+.top { display:flex; align-items:center; justify-content:space-between; }
+.back { min-height:42px; display:inline-flex; align-items:center; gap:7px; border:0; background:transparent; color:#60748b; font-weight:700; text-decoration:none; }
+.mode { padding:6px 9px; border-radius:7px; background:#edf3fb; color:#5a7088; font-size:11px; font-weight:750; }
+.card { min-height:520px; display:flex; flex-direction:column; border:1px solid #e2e8f0; border-radius:16px; background:#fff; box-shadow:0 10px 30px #17385b0a; overflow:hidden; }
+.progress { padding:15px 18px 12px; border-bottom:1px solid #edf1f5; background:#f7f9fc; }
+.progressRow { display:flex; justify-content:space-between; gap:10px; color:#58708a; font-size:12px; font-weight:750; }
+.track { height:7px; margin-top:10px; border-radius:20px; background:#dde6f1; overflow:hidden; }
+.track i { height:100%; display:block; border-radius:20px; background:#3478f6; transition:width .25s ease; }
+.body { flex:1; padding:24px 22px 18px; display:flex; flex-direction:column; align-items:center; gap:16px; text-align:center; }
+.statusIcon { width:62px; height:62px; display:grid; place-items:center; border-radius:50%; background:#edf4ff; color:#3478f6; }
+.listening { background:#fff0ec; color:#c64d3a; animation:pulse .8s ease-in-out infinite alternate; }
+.speaking { background:#edf8f1; color:#218454; }
+.prompt { max-width:530px; margin:0; color:#263b55; font-size:20px; line-height:1.45; }
+.helper { margin:-6px 0 0; color:#73869a; font-size:12px; }
+.summary { width:100%; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; text-align:left; }
+.summaryItem { min-height:58px; padding:10px; border:1px solid #e6ebf2; border-radius:9px; background:#fafbfc; }
+.summaryItem span { display:block; color:#8493a3; font-size:10px; font-weight:750; text-transform:uppercase; }
+.summaryItem strong { display:block; margin-top:5px; color:#2c4057; font-size:12px; line-break:anywhere; }
+.controls { width:100%; display:flex; justify-content:center; gap:10px; }
+.recordButton,.actionButton,.sendButton,.confirmButton,.rejectButton { min-height:54px; border:0; border-radius:11px; display:inline-flex; align-items:center; justify-content:center; gap:8px; font-weight:750; cursor:pointer; }
+.recordButton { width:64px; height:64px; min-height:64px; border-radius:50%; background:#3478f6; color:#fff; box-shadow:0 8px 20px #3478f62e; }
+.recordButton.stop { background:#c64d3a; }
+.actionButton { min-height:46px; padding:0 14px; background:#edf2f7; color:#52677f; }
+.confirmButton { flex:1; background:#168153; color:#fff; }
+.rejectButton { flex:1; background:#edf1f6; color:#52677f; }
+.inputRow { width:100%; display:grid; grid-template-columns:minmax(0,1fr) auto; gap:8px; }
+.textInput { min-width:0; min-height:52px; padding:10px 12px; border:1px solid #ccd8e5; border-radius:10px; color:#263b55; font:inherit; resize:vertical; }
+.textInput:focus { outline:3px solid #e5efff; border-color:#3478f6; }
+.sendButton { min-width:52px; background:#3478f6; color:#fff; }
+.sendButton:disabled,.actionButton:disabled { opacity:.55; cursor:default; }
+.alert { width:100%; padding:10px 12px; border-radius:9px; background:#fff1ed; color:#9f3d30; font-size:12px; line-height:1.45; }
+.demo { width:100%; padding:8px 10px; border-radius:8px; background:#fff7df; color:#7c611c; font-size:11px; }
+.saved { width:100%; display:grid; justify-items:center; gap:12px; }
+.savedIcon { width:74px; height:74px; display:grid; place-items:center; border-radius:50%; background:#e8f6ee; color:#168153; }
+.saved h2 { margin:0; font-size:24px; }
+.saved p { margin:-5px 0 4px; color:#74869a; font-size:13px; }
+.dashboardButton { min-height:49px; padding:0 18px; border-radius:10px; background:#245fc9; color:#fff; display:inline-flex; align-items:center; text-decoration:none; font-size:13px; font-weight:750; }
+@media(max-width:600px){ .shell{min-height:calc(100vh - 110px)} .card{min-height:520px;border-radius:13px}.body{padding:18px 13px 14px}.prompt{font-size:17px}.summary{grid-template-columns:1fr}.inputRow{grid-template-columns:minmax(0,1fr) 52px}.mode{display:none}.summaryItem{min-height:52px}.controls{flex-wrap:wrap}.confirmButton,.rejectButton{min-height:52px} }
