@@ -1,0 +1,367 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  WORKER
+  EMPLOYER
+  ADMIN
+}
+
+enum PreferredLanguage {
+  ENGLISH
+  HINDI
+  KANNADA
+}
+
+enum AssessmentDifficulty {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+  EXPERT
+}
+
+enum AssessmentStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  SUBMITTED
+  PROCESSING
+  AWAITING_REVIEW
+  VERIFIED
+  NEEDS_ANOTHER_DEMONSTRATION
+  REJECTED
+}
+
+enum EvidenceType {
+  VIDEO
+  AUDIO
+  IMAGE
+  DOCUMENT
+}
+
+enum StorageProvider {
+  LOCAL_DEMO
+  S3
+}
+
+enum ReviewDecision {
+  APPROVED
+  NEEDS_ANOTHER_DEMONSTRATION
+  REJECTED
+}
+
+enum EndorsementStatus {
+  REQUESTED
+  ENDORSED
+  DECLINED
+}
+
+enum CredentialStatus {
+  ACTIVE
+  REVOKED
+  EXPIRED
+}
+
+enum EmploymentType {
+  FULL_TIME
+  PART_TIME
+  CONTRACT
+  TEMPORARY
+  DAILY_WAGE
+  INTERNSHIP
+}
+
+enum JobStatus {
+  DRAFT
+  OPEN
+  PAUSED
+  CLOSED
+  FILLED
+}
+
+enum ApplicationStatus {
+  APPLIED
+  REVIEWING
+  SHORTLISTED
+  ACCEPTED
+  REJECTED
+  WITHDRAWN
+}
+
+model User {
+  id           String    @id @default(uuid()) @db.Uuid
+  phoneNumber  String    @unique @db.VarChar(20)
+  email        String?   @unique
+  passwordHash String?
+  role         UserRole  @default(WORKER)
+  isActive     Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  workerProfile   WorkerProfile?
+  employerProfile EmployerProfile?
+  reviews         Review[]         @relation("ReviewReviewer")
+  endorsements    Endorsement[]    @relation("EndorsementEndorser")
+
+  @@index([role, isActive])
+}
+
+model WorkerProfile {
+  id                    String            @id @default(uuid()) @db.Uuid
+  userId                String            @unique @db.Uuid
+  fullName              String
+  city                  String
+  locality              String
+  preferredLanguage     PreferredLanguage @default(ENGLISH)
+  profilePhotoUrl       String?
+  tradeId               String?           @db.Uuid
+  specificWork          String
+  yearsExperience       Int               @default(0)
+  introduction          String
+  introductionAudioUrl  String?
+  profileCompleted      Boolean           @default(false)
+  createdAt             DateTime          @default(now())
+  updatedAt             DateTime          @updatedAt
+
+  user         User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  trade        Trade?                @relation(fields: [tradeId], references: [id], onDelete: SetNull)
+  workerSkills WorkerSkill[]
+  submissions  AssessmentSubmission[]
+  endorsements Endorsement[]
+  credentials  Credential[]
+  applications Application[]
+
+  @@index([tradeId])
+  @@index([city, locality])
+}
+
+model EmployerProfile {
+  id                    String   @id @default(uuid()) @db.Uuid
+  userId                String   @unique @db.Uuid
+  organizationName      String
+  contactPerson         String
+  city                  String
+  locality              String
+  organizationDescription String?
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  jobs Job[]
+
+  @@index([city, locality])
+}
+
+model Trade {
+  id          String   @id @default(uuid()) @db.Uuid
+  name        String   @unique
+  slug        String   @unique
+  description String
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  skills         Skill[]
+  workerProfiles WorkerProfile[]
+  jobs           Job[]
+
+  @@index([isActive])
+}
+
+model Skill {
+  id          String   @id @default(uuid()) @db.Uuid
+  tradeId     String   @db.Uuid
+  name        String
+  slug        String
+  description String
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  trade        Trade         @relation(fields: [tradeId], references: [id], onDelete: Restrict)
+  workerSkills WorkerSkill[]
+  assessments  Assessment[]
+  endorsements Endorsement[]
+
+  @@unique([tradeId, name])
+  @@unique([tradeId, slug])
+  @@index([tradeId, isActive])
+}
+
+model WorkerSkill {
+  id              String   @id @default(uuid()) @db.Uuid
+  workerProfileId String   @db.Uuid
+  skillId         String   @db.Uuid
+  experienceYears Int?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  workerProfile WorkerProfile @relation(fields: [workerProfileId], references: [id], onDelete: Cascade)
+  skill         Skill         @relation(fields: [skillId], references: [id], onDelete: Restrict)
+
+  @@unique([workerProfileId, skillId])
+  @@index([skillId])
+}
+
+model Assessment {
+  id                      String              @id @default(uuid()) @db.Uuid
+  skillId                 String              @db.Uuid
+  title                   String
+  description             String
+  instructions            String
+  difficulty              AssessmentDifficulty @default(BEGINNER)
+  estimatedDurationMinutes Int
+  rubric                  Json
+  isActive                Boolean             @default(true)
+  createdAt               DateTime            @default(now())
+  updatedAt               DateTime            @updatedAt
+
+  skill       Skill                  @relation(fields: [skillId], references: [id], onDelete: Restrict)
+  submissions AssessmentSubmission[]
+
+  @@index([skillId, isActive])
+}
+
+model AssessmentSubmission {
+  id               String           @id @default(uuid()) @db.Uuid
+  workerProfileId  String           @db.Uuid
+  assessmentId     String           @db.Uuid
+  status           AssessmentStatus @default(NOT_STARTED)
+  challengeCode    String
+  challengeExpiresAt DateTime?
+  startedAt        DateTime         @default(now())
+  submittedAt      DateTime?
+  reviewedAt       DateTime?
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+
+  workerProfile WorkerProfile @relation(fields: [workerProfileId], references: [id], onDelete: Restrict)
+  assessment    Assessment    @relation(fields: [assessmentId], references: [id], onDelete: Restrict)
+  evidence      Evidence[]
+  reviews       Review[]
+  credential    Credential?
+
+  @@unique([workerProfileId, assessmentId, challengeCode])
+  @@index([workerProfileId, status])
+  @@index([assessmentId, status])
+}
+
+model Evidence {
+  id             String          @id @default(uuid()) @db.Uuid
+  submissionId   String          @db.Uuid
+  evidenceType   EvidenceType
+  storageProvider StorageProvider
+  storageKey     String?
+  originalFileName String?
+  mimeType       String
+  fileSize       Int
+  durationSeconds Int?
+  sha256Hash     String?
+  uploadedAt     DateTime        @default(now())
+  createdAt      DateTime        @default(now())
+
+  submission AssessmentSubmission @relation(fields: [submissionId], references: [id], onDelete: Restrict)
+
+  @@index([submissionId])
+  @@index([sha256Hash])
+}
+
+model Review {
+  id            String         @id @default(uuid()) @db.Uuid
+  submissionId  String         @db.Uuid
+  reviewerId    String         @db.Uuid
+  decision      ReviewDecision
+  score         Int?
+  feedback      String
+  rubricResults Json?
+  reviewedAt    DateTime       @default(now())
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  submission AssessmentSubmission @relation(fields: [submissionId], references: [id], onDelete: Restrict)
+  reviewer   User                 @relation("ReviewReviewer", fields: [reviewerId], references: [id], onDelete: Restrict)
+
+  @@unique([submissionId])
+  @@index([reviewerId])
+}
+
+model Endorsement {
+  id              String            @id @default(uuid()) @db.Uuid
+  workerProfileId String            @db.Uuid
+  endorserId      String            @db.Uuid
+  skillId         String?           @db.Uuid
+  message         String?
+  status          EndorsementStatus @default(REQUESTED)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  workerProfile WorkerProfile @relation(fields: [workerProfileId], references: [id], onDelete: Cascade)
+  endorser      User          @relation("EndorsementEndorser", fields: [endorserId], references: [id], onDelete: Restrict)
+  skill         Skill?        @relation(fields: [skillId], references: [id], onDelete: SetNull)
+
+  @@unique([workerProfileId, endorserId, skillId])
+  @@index([endorserId])
+}
+
+model Credential {
+  id               String           @id @default(uuid()) @db.Uuid
+  workerProfileId  String           @db.Uuid
+  submissionId     String           @unique @db.Uuid
+  credentialNumber String           @unique
+  title            String
+  description      String
+  issuedAt         DateTime         @default(now())
+  expiresAt        DateTime?
+  revokedAt        DateTime?
+  status           CredentialStatus @default(ACTIVE)
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+
+  workerProfile WorkerProfile        @relation(fields: [workerProfileId], references: [id], onDelete: Restrict)
+  submission    AssessmentSubmission @relation(fields: [submissionId], references: [id], onDelete: Restrict)
+
+  @@index([workerProfileId, status])
+}
+
+model Job {
+  id                String         @id @default(uuid()) @db.Uuid
+  employerProfileId String         @db.Uuid
+  title             String
+  description       String
+  tradeId           String         @db.Uuid
+  city              String
+  locality          String
+  employmentType    EmploymentType
+  salaryMin         Int?
+  salaryMax         Int?
+  status            JobStatus      @default(DRAFT)
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+
+  employerProfile EmployerProfile @relation(fields: [employerProfileId], references: [id], onDelete: Cascade)
+  trade           Trade           @relation(fields: [tradeId], references: [id], onDelete: Restrict)
+  applications    Application[]
+
+  @@index([tradeId, status])
+  @@index([city, locality])
+}
+
+model Application {
+  id              String            @id @default(uuid()) @db.Uuid
+  jobId           String            @db.Uuid
+  workerProfileId String            @db.Uuid
+  message         String?
+  status          ApplicationStatus @default(APPLIED)
+  appliedAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  job           Job           @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  workerProfile WorkerProfile @relation(fields: [workerProfileId], references: [id], onDelete: Cascade)
+
+  @@unique([jobId, workerProfileId])
+  @@index([workerProfileId, status])
+}

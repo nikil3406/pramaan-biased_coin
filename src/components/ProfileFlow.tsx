@@ -10,7 +10,7 @@ import { VoiceLanguageSelector } from "@/components/profile/VoiceLanguageSelecto
 import { VoiceRecorder } from "@/components/profile/VoiceRecorder";
 import { profileText } from "@/data/profileTranslations";
 import { emptyProfile, type ProfileDraft } from "@/types/profile";
-import { loadProfile, saveProfile } from "@/services/profileService";
+import { loadProfile, loadServerProfile, saveProfile, syncProfileWithServer } from "@/services/profileService";
 import styles from "./ProfileFlow.module.css";
 
 const totalQuestions = 11;
@@ -79,12 +79,14 @@ export function ProfileFlow() {
   const [validationMessage, setValidationMessage] = useState("");
   useEffect(() => {
     let active = true;
-    void Promise.resolve().then(() => {
-      if (!active) return;
+    void Promise.resolve().then(async () => {
       const saved = loadProfile();
-      setProfile(saved);
-      setQuestionIndex(Math.min(saved.currentQuestion, totalQuestions - 1));
-      if (saved.preferredLanguage) setLanguage(saved.preferredLanguage);
+      const serverProfile = await loadServerProfile();
+      if (!active) return;
+      const merged = serverProfile ? { ...saved, ...serverProfile, photoDataUrl: saved.photoDataUrl } : saved;
+      setProfile(merged);
+      setQuestionIndex(Math.min(merged.currentQuestion, totalQuestions - 1));
+      if (merged.preferredLanguage) setLanguage(merged.preferredLanguage);
       setReady(true);
     });
     return () => { active = false; };
@@ -172,6 +174,9 @@ export function ProfileFlow() {
       const finished = { ...profile, currentQuestion: questionIndex, completed: true, updatedAt: new Date().toISOString() };
       if (!saveProfile(finished)) { setSaveWarning("Could not save profile details on this device."); return; }
       setProfile(finished);
+      void syncProfileWithServer(finished).then((saved) => {
+        if (!saved) setSaveWarning("Profile is saved on this device, but the server connection failed.");
+      });
       return;
     }
     moveTo(questionIndex + 1);
